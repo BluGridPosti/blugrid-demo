@@ -3,16 +3,20 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>BluGrid AI Assistant Pro</title>
+  <title>BluGrid AI Assistant</title>
   <style>
     :root {
-      --bg: #0b1220;
-      --panel: #111827;
+      --bg: #081120;
+      --panel: #0f172a;
+      --panel-2: #111827;
+      --card: rgba(255,255,255,0.04);
+      --line: rgba(255,255,255,0.08);
       --text: #e5e7eb;
       --muted: #94a3b8;
       --brand: #2563eb;
-      --brand2: #1d4ed8;
-      --line: #1f2937;
+      --brand-2: #1d4ed8;
+      --success: #22c55e;
+      --shadow: 0 20px 60px rgba(2,6,23,0.35);
     }
 
     * {
@@ -24,12 +28,112 @@
       padding: 0;
       font-family: Arial, sans-serif;
       background: #f8fafc;
+      color: #0f172a;
     }
 
-    .wrap {
-      max-width: 800px;
+    body {
+      min-height: 100vh;
+    }
+
+    .hero {
+      background:
+        radial-gradient(circle at top right, rgba(37,99,235,0.35), transparent 25%),
+        linear-gradient(135deg, #0b1220, #1d4ed8);
+      color: white;
+      padding: 44px 20px 34px;
+    }
+
+    .hero-inner {
+      max-width: 900px;
       margin: 0 auto;
-      padding: 28px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 999px;
+      padding: 8px 12px;
+      font-size: 12px;
+      margin-bottom: 16px;
+    }
+
+    .eyebrow-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: #60a5fa;
+    }
+
+    .hero h1 {
+      margin: 0 0 12px;
+      font-size: 44px;
+      line-height: 1.02;
+      letter-spacing: -0.02em;
+      max-width: 780px;
+    }
+
+    .hero p {
+      margin: 0;
+      max-width: 760px;
+      font-size: 18px;
+      line-height: 1.6;
+      color: rgba(255,255,255,0.9);
+    }
+
+    .hero-points {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    .hero-pill {
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.12);
+      color: white;
+      border-radius: 999px;
+      padding: 10px 14px;
+      font-size: 13px;
+    }
+
+    .section {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 26px 20px 120px;
+    }
+
+    .demo-heading {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+
+    .demo-heading h2 {
+      margin: 0;
+      font-size: 24px;
+      color: #0f172a;
+    }
+
+    .demo-heading p {
+      margin: 6px 0 0;
+      color: #475569;
+      line-height: 1.5;
+      max-width: 700px;
+    }
+
+    .badge {
+      border-radius: 999px;
+      background: #e0f2fe;
+      color: #0c4a6e;
+      padding: 8px 12px;
+      font-size: 12px;
+      font-weight: 700;
+      white-space: nowrap;
     }
 
     #launcher {
@@ -40,20 +144,20 @@
       border: none;
       border-radius: 999px;
       padding: 14px 18px;
-      background: linear-gradient(135deg, var(--brand), var(--brand2));
+      background: linear-gradient(135deg, var(--brand), var(--brand-2));
       color: #fff;
       font-weight: 700;
       cursor: pointer;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+      box-shadow: var(--shadow);
     }
 
     #box {
       position: fixed;
       right: 20px;
       bottom: 84px;
-      width: 380px;
+      width: 390px;
       max-width: calc(100vw - 20px);
-      height: 640px;
+      height: 680px;
       max-height: calc(100vh - 100px);
       display: none;
       flex-direction: column;
@@ -61,14 +165,17 @@
       color: var(--text);
       border-radius: 22px;
       overflow: hidden;
-      box-shadow: 0 20px 60px rgba(2, 6, 23, 0.35);
+      box-shadow: var(--shadow);
       z-index: 9999;
+      border: 1px solid var(--line);
     }
 
     #header {
       padding: 16px;
-      background: linear-gradient(180deg, #111827, #0b1220);
-      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+      background:
+        radial-gradient(circle at top right, rgba(37,99,235,0.18), transparent 30%),
+        linear-gradient(180deg, #111827, #0b1220);
+      border-bottom: 1px solid var(--line);
     }
 
     .headrow {
@@ -78,9 +185,30 @@
       gap: 10px;
     }
 
+    .brand-wrap {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-width: 0;
+    }
+
+    .brand-badge {
+      width: 42px;
+      height: 42px;
+      border-radius: 14px;
+      background: linear-gradient(135deg, var(--brand), var(--brand-2));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      color: #fff;
+      flex-shrink: 0;
+    }
+
     .title {
       font-weight: 800;
       font-size: 16px;
+      margin: 0;
     }
 
     .sub {
@@ -92,15 +220,16 @@
     .icon-wrap {
       display: flex;
       gap: 8px;
+      flex-shrink: 0;
     }
 
     .icon {
       border: none;
-      background: rgba(255, 255, 255, 0.06);
+      background: rgba(255,255,255,0.06);
       color: #fff;
-      border-radius: 10px;
-      width: 34px;
-      height: 34px;
+      border-radius: 12px;
+      width: 38px;
+      height: 38px;
       cursor: pointer;
       font-size: 16px;
     }
@@ -109,25 +238,47 @@
       display: flex;
       flex-wrap: wrap;
       gap: 8px;
-      margin-top: 12px;
+      margin-top: 14px;
     }
 
     .chip {
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.04);
       color: #fff;
       border-radius: 999px;
-      padding: 8px 12px;
+      padding: 10px 13px;
       font-size: 12px;
       cursor: pointer;
       text-align: center;
+    }
+
+    .statusbar {
+      margin-top: 12px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+      color: #cbd5e1;
+      background: rgba(34,197,94,0.12);
+      border: 1px solid rgba(34,197,94,0.2);
+      border-radius: 999px;
+      padding: 8px 12px;
+    }
+
+    .statusbar .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: var(--success);
     }
 
     #messages {
       flex: 1;
       overflow-y: auto;
       padding: 14px;
-      background: linear-gradient(180deg, #0b1220, #0f172a);
+      background:
+        radial-gradient(circle at top right, rgba(37,99,235,0.12), transparent 20%),
+        linear-gradient(180deg, #081120, #0b1730);
     }
 
     .row {
@@ -150,12 +301,13 @@
     }
 
     .bot {
-      background: #1f2937;
+      background: #1e293b;
       border-top-left-radius: 6px;
+      color: var(--text);
     }
 
     .user {
-      background: linear-gradient(135deg, var(--brand), var(--brand2));
+      background: linear-gradient(135deg, var(--brand), var(--brand-2));
       color: #fff;
       border-top-right-radius: 6px;
     }
@@ -163,7 +315,7 @@
     #footer {
       padding: 12px;
       background: #0b1220;
-      border-top: 1px solid rgba(255, 255, 255, 0.06);
+      border-top: 1px solid var(--line);
     }
 
     .inputrow {
@@ -177,7 +329,7 @@
       min-height: 48px;
       max-height: 120px;
       resize: none;
-      border: 1px solid rgba(255, 255, 255, 0.08);
+      border: 1px solid var(--line);
       background: #111827;
       color: #fff;
       border-radius: 14px;
@@ -188,10 +340,10 @@
 
     #send {
       height: 48px;
-      min-width: 52px;
+      min-width: 54px;
       border: none;
       border-radius: 14px;
-      background: linear-gradient(135deg, var(--brand), var(--brand2));
+      background: linear-gradient(135deg, var(--brand), var(--brand-2));
       color: #fff;
       cursor: pointer;
       font-weight: 800;
@@ -229,8 +381,8 @@
 
     .lead {
       margin: 10px 0 14px;
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--line);
+      background: var(--card);
       border-radius: 18px;
       padding: 14px;
     }
@@ -244,6 +396,7 @@
       margin: 0 0 12px;
       color: var(--muted);
       font-size: 13px;
+      line-height: 1.5;
     }
 
     .field {
@@ -262,7 +415,7 @@
     .field select {
       width: 100%;
       border-radius: 12px;
-      border: 1px solid rgba(255, 255, 255, 0.08);
+      border: 1px solid var(--line);
       background: #0b1220;
       color: #fff;
       padding: 12px;
@@ -291,19 +444,44 @@
     }
 
     .primary {
-      background: linear-gradient(135deg, var(--brand), var(--brand2));
+      background: linear-gradient(135deg, var(--brand), var(--brand-2));
       color: #fff;
     }
 
     .secondary {
-      background: rgba(255, 255, 255, 0.06);
+      background: rgba(255,255,255,0.06);
       color: #fff;
-      border: 1px solid rgba(255, 255, 255, 0.08);
+      border: 1px solid var(--line);
     }
 
     @media (max-width: 768px) {
-      .wrap {
-        padding: 0;
+      .hero {
+        padding: 30px 16px 26px;
+      }
+
+      .hero h1 {
+        font-size: 32px;
+      }
+
+      .hero p {
+        font-size: 16px;
+      }
+
+      .section {
+        padding: 18px 0 110px;
+      }
+
+      .demo-heading {
+        padding: 0 16px;
+        margin-bottom: 12px;
+      }
+
+      .demo-heading h2 {
+        font-size: 20px;
+      }
+
+      .demo-heading p {
+        font-size: 14px;
       }
 
       #box {
@@ -323,12 +501,12 @@
       .chips {
         display: grid;
         grid-template-columns: 1fr 1fr;
-        gap: 6px;
+        gap: 8px;
       }
 
       .chip {
         font-size: 11px;
-        padding: 8px 10px;
+        padding: 10px 10px;
       }
 
       #messages {
@@ -350,13 +528,13 @@
       }
 
       #input {
-        min-height: 46px;
+        min-height: 48px;
         font-size: 16px;
       }
 
       #send {
-        min-width: 54px;
-        height: 46px;
+        min-width: 56px;
+        height: 48px;
       }
 
       #launcher {
@@ -371,26 +549,52 @@
   </style>
 </head>
 <body>
-  <div class="wrap">
-    <h1>BluGrid AI Assistant Pro Widget</h1>
-    <p>
-      Turn your website into a 24/7 sales machine. 
-      BluGrid's AI Assistant engages visitors, answers questions, qualifies leads, and book calls — all automatically.
-    </p>
-  </div>
+  <section class="hero">
+    <div class="hero-inner">
+      <div class="eyebrow">
+        <span class="eyebrow-dot"></span>
+        <span>AI-Powered Website Conversion</span>
+      </div>
+      <h1>Turn your website into a 24/7 sales machine.</h1>
+      <p>
+        BluGrid’s AI assistant engages visitors instantly, answers questions, qualifies leads,
+        and helps turn traffic into real opportunities — automatically.
+      </p>
+      <div class="hero-points">
+        <span class="hero-pill">Instant replies</span>
+        <span class="hero-pill">Lead capture</span>
+        <span class="hero-pill">Qualification</span>
+        <span class="hero-pill">Booking-ready</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="demo-heading">
+      <div>
+        <h2>See it in action</h2>
+        <p>Test the assistant exactly like a real website visitor would.</p>
+      </div>
+      <span class="badge">Live Demo</span>
+    </div>
+  </section>
 
   <button id="launcher">Chat with us</button>
 
   <div id="box">
     <div id="header">
       <div class="headrow">
-        <div>
-          <div class="title">BluGrid AI Assistant</div>
-          <div class="sub">Sales • Support • Qualification</div>
+        <div class="brand-wrap">
+          <div class="brand-badge">BG</div>
+          <div>
+            <div class="title">BluGrid AI Assistant</div>
+            <div class="sub">Sales • Support • Qualification</div>
+          </div>
         </div>
+
         <div class="icon-wrap">
-          <button class="icon" id="reset">↺</button>
-          <button class="icon" id="close">✕</button>
+          <button class="icon" id="reset" title="Reset">↺</button>
+          <button class="icon" id="close" title="Close">✕</button>
         </div>
       </div>
 
@@ -399,6 +603,11 @@
         <button class="chip" data-prompt="How can an AI assistant help my business?">AI assistant value</button>
         <button class="chip" data-prompt="How quickly can this be deployed?">Deployment speed</button>
         <button class="chip" id="bookchip">Book a call</button>
+      </div>
+
+      <div class="statusbar">
+        <span class="dot"></span>
+        <span>Typically replies in seconds</span>
       </div>
     </div>
 
@@ -448,24 +657,6 @@
       return id;
     }
 
-    function stored() {
-      try {
-        return JSON.parse(localStorage.getItem(STORE) || "[]");
-      } catch {
-        return [];
-      }
-    }
-
-    function save(arr) {
-      localStorage.setItem(STORE, JSON.stringify(arr));
-    }
-
-    function push(msg) {
-      const arr = stored();
-      arr.push(msg);
-      save(arr);
-    }
-
     function esc(s) {
       return s
         .replaceAll("&", "&amp;")
@@ -478,7 +669,7 @@
       input.style.height = Math.min(input.scrollHeight, 120) + "px";
     }
 
-    function add(text, sender, persist = true) {
+    function add(text, sender) {
       const row = document.createElement("div");
       row.className = "row " + sender;
 
@@ -489,18 +680,13 @@
       row.appendChild(bubble);
       messages.appendChild(row);
       messages.scrollTop = messages.scrollHeight;
-
-      if (persist) {
-        push({ text, sender });
-      }
     }
 
     function render() {
       messages.innerHTML = "";
       add(
         "Hi — welcome to BluGrid. I can answer questions, explain our systems, and help you book a call or request a custom solution.",
-        "bot",
-        true
+        "bot"
       );
     }
 
@@ -537,7 +723,7 @@
       if (!text || sending) return;
 
       sending = true;
-      add(text, "user", true);
+      add(text, "user");
       showTyping();
 
       try {
@@ -565,7 +751,7 @@
           data = JSON.parse(rawText);
         } catch (e) {
           hideTyping();
-          add("Server replied, but the response was not valid JSON.", "bot", true);
+          add("Server replied, but the response was not valid JSON.", "bot");
           console.error("JSON parse error:", e, rawText);
           return;
         }
@@ -573,7 +759,7 @@
         hideTyping();
 
         if (data.reply) {
-          add(data.reply, "bot", true);
+          add(data.reply, "bot");
 
           const already = localStorage.getItem(LEAD_SENT) === "true";
           if (
@@ -583,12 +769,12 @@
             setTimeout(showLeadForm, 500);
           }
         } else {
-          add("The server responded, but no reply field was found.", "bot", true);
+          add("The server responded, but no reply field was found.", "bot");
           console.log("Unexpected response shape:", data);
         }
       } catch (e) {
         hideTyping();
-        add("Connection error. Please try again in a moment.", "bot", true);
+        add("Connection error. Please try again in a moment.", "bot");
         console.error(e);
       } finally {
         sending = false;
@@ -715,7 +901,7 @@
             </div>
           `;
 
-          add("Thanks — your details have been captured. BluGrid will follow up with you shortly.", "bot", true);
+          add("Thanks — your details have been captured. BluGrid will follow up with you shortly.", "bot");
         } else {
           alert((data.errors || []).join(", ") || data.message || "Lead capture failed.");
           btn.textContent = "Send details";
