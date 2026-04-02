@@ -8,7 +8,6 @@
     :root {
       --bg: #081120;
       --panel: #0f172a;
-      --panel-2: #111827;
       --card: rgba(255, 255, 255, 0.04);
       --line: rgba(255, 255, 255, 0.08);
       --text: #e5e7eb;
@@ -27,10 +26,10 @@
     body {
       margin: 0;
       padding: 0;
+      min-height: 100%;
       font-family: Arial, sans-serif;
       background: #f8fafc;
       color: #0f172a;
-      min-height: 100%;
     }
 
     body {
@@ -42,12 +41,12 @@
         radial-gradient(circle at top right, rgba(37, 99, 235, 0.35), transparent 25%),
         linear-gradient(135deg, #0b1220, #1d4ed8);
       color: white;
-      padding: 56px 20px 48px;
+      padding: 56px 20px 46px;
       text-align: center;
     }
 
     .hero-inner {
-      max-width: 860px;
+      max-width: 900px;
       margin: 0 auto;
       display: flex;
       flex-direction: column;
@@ -91,7 +90,6 @@
       line-height: 1.65;
       color: rgba(255, 255, 255, 0.9);
       text-align: center;
-      text-wrap: pretty;
     }
 
     .hero-points {
@@ -113,42 +111,39 @@
     }
 
     .section {
-      max-width: 1000px;
+      max-width: 980px;
       margin: 0 auto;
-      padding: 28px 20px 120px;
+      padding: 24px 20px 120px;
     }
 
     .demo-heading {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 14px;
-      margin-bottom: 20px;
       text-align: center;
-      flex-wrap: wrap;
+      margin-bottom: 18px;
     }
 
-    .demo-heading h2 {
-      margin: 0;
-      font-size: 24px;
-      color: #0f172a;
-    }
-
-    .demo-heading p {
-      margin: 8px 0 0;
-      color: #475569;
-      line-height: 1.6;
-      max-width: 660px;
-    }
-
-    .badge {
+    .demo-heading .badge {
+      display: inline-block;
       border-radius: 999px;
       background: #dbeafe;
       color: #1d4ed8;
       padding: 8px 12px;
       font-size: 12px;
       font-weight: 700;
-      white-space: nowrap;
+      margin-bottom: 12px;
+    }
+
+    .demo-heading h2 {
+      margin: 0 0 8px;
+      font-size: 26px;
+      color: #0f172a;
+    }
+
+    .demo-heading p {
+      margin: 0 auto;
+      color: #475569;
+      line-height: 1.6;
+      max-width: 680px;
+      font-size: 16px;
     }
 
     #launcher {
@@ -210,14 +205,21 @@
     .brand-badge {
       width: 42px;
       height: 42px;
-      border-radius: 14px;
-      background: linear-gradient(135deg, var(--brand), var(--brand-2));
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.08);
+      padding: 6px;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-weight: 800;
-      color: #fff;
+      overflow: hidden;
       flex-shrink: 0;
+    }
+
+    .brand-badge img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      display: block;
     }
 
     .title {
@@ -250,8 +252,8 @@
     }
 
     .chips {
-      display: flex;
-      flex-wrap: wrap;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
       gap: 8px;
       margin-top: 14px;
     }
@@ -499,7 +501,6 @@
 
       .demo-heading {
         padding: 0 16px;
-        margin-bottom: 12px;
       }
 
       .demo-heading h2 {
@@ -525,8 +526,6 @@
       }
 
       .chips {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
         gap: 8px;
       }
 
@@ -601,11 +600,9 @@
 
   <section class="section">
     <div class="demo-heading">
-      <div>
-        <h2>See it in action</h2>
-        <p>Test the assistant exactly like a real website visitor would.</p>
-      </div>
       <span class="badge">Live Demo</span>
+      <h2>See it in action</h2>
+      <p>Test the assistant exactly like a real website visitor would.</p>
     </div>
   </section>
 
@@ -615,7 +612,9 @@
     <div id="header">
       <div class="headrow">
         <div class="brand-wrap">
-          <div class="brand-badge">BG</div>
+          <div class="brand-badge">
+            <img src="logo.png" alt="BluGrid Logo" />
+          </div>
           <div>
             <div class="title">BluGrid AI Assistant</div>
             <div class="sub">Sales • Support • Qualification</div>
