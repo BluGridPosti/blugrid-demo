@@ -9,26 +9,28 @@
       --bg: #081120;
       --panel: #0f172a;
       --panel-2: #111827;
-      --card: rgba(255,255,255,0.04);
-      --line: rgba(255,255,255,0.08);
+      --card: rgba(255, 255, 255, 0.04);
+      --line: rgba(255, 255, 255, 0.08);
       --text: #e5e7eb;
       --muted: #94a3b8;
       --brand: #2563eb;
       --brand-2: #1d4ed8;
       --success: #22c55e;
-      --shadow: 0 20px 60px rgba(2,6,23,0.35);
+      --shadow: 0 20px 60px rgba(2, 6, 23, 0.35);
     }
 
     * {
       box-sizing: border-box;
     }
 
-    html, body {
+    html,
+    body {
       margin: 0;
       padding: 0;
       font-family: Arial, sans-serif;
       background: #f8fafc;
       color: #0f172a;
+      min-height: 100%;
     }
 
     body {
@@ -37,27 +39,32 @@
 
     .hero {
       background:
-        radial-gradient(circle at top right, rgba(37,99,235,0.35), transparent 25%),
+        radial-gradient(circle at top right, rgba(37, 99, 235, 0.35), transparent 25%),
         linear-gradient(135deg, #0b1220, #1d4ed8);
       color: white;
-      padding: 44px 20px 34px;
+      padding: 56px 20px 48px;
+      text-align: center;
     }
 
     .hero-inner {
-      max-width: 900px;
+      max-width: 860px;
       margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
 
     .eyebrow {
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      background: rgba(255,255,255,0.08);
-      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.12);
       border-radius: 999px;
-      padding: 8px 12px;
+      padding: 8px 14px;
       font-size: 12px;
-      margin-bottom: 16px;
+      margin-bottom: 18px;
+      backdrop-filter: blur(6px);
     }
 
     .eyebrow-dot {
@@ -68,49 +75,57 @@
     }
 
     .hero h1 {
-      margin: 0 0 12px;
-      font-size: 44px;
+      margin: 0 0 16px;
+      max-width: 760px;
+      font-size: 52px;
       line-height: 1.02;
-      letter-spacing: -0.02em;
-      max-width: 780px;
+      letter-spacing: -0.03em;
+      font-weight: 800;
+      text-wrap: balance;
     }
 
     .hero p {
-      margin: 0;
-      max-width: 760px;
-      font-size: 18px;
-      line-height: 1.6;
-      color: rgba(255,255,255,0.9);
+      margin: 0 auto;
+      max-width: 720px;
+      font-size: 19px;
+      line-height: 1.65;
+      color: rgba(255, 255, 255, 0.9);
+      text-align: center;
+      text-wrap: pretty;
     }
 
     .hero-points {
       display: flex;
       flex-wrap: wrap;
+      justify-content: center;
       gap: 10px;
-      margin-top: 20px;
+      margin-top: 24px;
     }
 
     .hero-pill {
-      background: rgba(255,255,255,0.08);
-      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.12);
       color: white;
       border-radius: 999px;
       padding: 10px 14px;
       font-size: 13px;
+      backdrop-filter: blur(6px);
     }
 
     .section {
-      max-width: 900px;
+      max-width: 1000px;
       margin: 0 auto;
-      padding: 26px 20px 120px;
+      padding: 28px 20px 120px;
     }
 
     .demo-heading {
       display: flex;
       align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-      margin-bottom: 18px;
+      justify-content: center;
+      gap: 14px;
+      margin-bottom: 20px;
+      text-align: center;
+      flex-wrap: wrap;
     }
 
     .demo-heading h2 {
@@ -120,16 +135,16 @@
     }
 
     .demo-heading p {
-      margin: 6px 0 0;
+      margin: 8px 0 0;
       color: #475569;
-      line-height: 1.5;
-      max-width: 700px;
+      line-height: 1.6;
+      max-width: 660px;
     }
 
     .badge {
       border-radius: 999px;
-      background: #e0f2fe;
-      color: #0c4a6e;
+      background: #dbeafe;
+      color: #1d4ed8;
       padding: 8px 12px;
       font-size: 12px;
       font-weight: 700;
@@ -143,7 +158,7 @@
       z-index: 9999;
       border: none;
       border-radius: 999px;
-      padding: 14px 18px;
+      padding: 14px 20px;
       background: linear-gradient(135deg, var(--brand), var(--brand-2));
       color: #fff;
       font-weight: 700;
@@ -173,7 +188,7 @@
     #header {
       padding: 16px;
       background:
-        radial-gradient(circle at top right, rgba(37,99,235,0.18), transparent 30%),
+        radial-gradient(circle at top right, rgba(37, 99, 235, 0.18), transparent 30%),
         linear-gradient(180deg, #111827, #0b1220);
       border-bottom: 1px solid var(--line);
     }
@@ -225,7 +240,7 @@
 
     .icon {
       border: none;
-      background: rgba(255,255,255,0.06);
+      background: rgba(255, 255, 255, 0.06);
       color: #fff;
       border-radius: 12px;
       width: 38px;
@@ -243,7 +258,7 @@
 
     .chip {
       border: 1px solid var(--line);
-      background: rgba(255,255,255,0.04);
+      background: rgba(255, 255, 255, 0.04);
       color: #fff;
       border-radius: 999px;
       padding: 10px 13px;
@@ -259,8 +274,8 @@
       gap: 8px;
       font-size: 12px;
       color: #cbd5e1;
-      background: rgba(34,197,94,0.12);
-      border: 1px solid rgba(34,197,94,0.2);
+      background: rgba(34, 197, 94, 0.12);
+      border: 1px solid rgba(34, 197, 94, 0.2);
       border-radius: 999px;
       padding: 8px 12px;
     }
@@ -277,7 +292,7 @@
       overflow-y: auto;
       padding: 14px;
       background:
-        radial-gradient(circle at top right, rgba(37,99,235,0.12), transparent 20%),
+        radial-gradient(circle at top right, rgba(37, 99, 235, 0.12), transparent 20%),
         linear-gradient(180deg, #081120, #0b1730);
     }
 
@@ -294,7 +309,7 @@
       max-width: 84%;
       padding: 12px 14px;
       border-radius: 18px;
-      line-height: 1.5;
+      line-height: 1.55;
       font-size: 14px;
       white-space: pre-wrap;
       word-break: break-word;
@@ -449,22 +464,33 @@
     }
 
     .secondary {
-      background: rgba(255,255,255,0.06);
+      background: rgba(255, 255, 255, 0.06);
       color: #fff;
       border: 1px solid var(--line);
     }
 
     @media (max-width: 768px) {
       .hero {
-        padding: 30px 16px 26px;
+        padding: 36px 18px 30px;
       }
 
       .hero h1 {
-        font-size: 32px;
+        font-size: 34px;
+        max-width: 100%;
       }
 
       .hero p {
         font-size: 16px;
+        max-width: 100%;
+      }
+
+      .hero-points {
+        gap: 8px;
+      }
+
+      .hero-pill {
+        font-size: 12px;
+        padding: 9px 12px;
       }
 
       .section {
@@ -555,11 +581,15 @@
         <span class="eyebrow-dot"></span>
         <span>AI-Powered Website Conversion</span>
       </div>
+
       <h1>Turn your website into a 24/7 sales machine.</h1>
+
       <p>
-        BluGrid’s AI assistant engages visitors instantly, answers questions, qualifies leads,
-        and helps turn traffic into real opportunities — automatically.
+        BluGrid’s AI assistant engages visitors instantly, answers questions,
+        qualifies leads, and helps convert traffic into real opportunities —
+        automatically.
       </p>
+
       <div class="hero-points">
         <span class="hero-pill">Instant replies</span>
         <span class="hero-pill">Lead capture</span>
@@ -622,7 +652,6 @@
   </div>
 
   <script>
-    // ALWAYS START FRESH ON PAGE LOAD
     localStorage.removeItem("blugrid_widget_messages");
     localStorage.removeItem("blugrid_widget_conversation_id");
     localStorage.removeItem("blugrid_widget_lead_sent");
