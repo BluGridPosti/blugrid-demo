@@ -5,44 +5,374 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>BluGrid AI Assistant Pro</title>
   <style>
-    :root{--bg:#0b1220;--panel:#111827;--text:#e5e7eb;--muted:#94a3b8;--brand:#2563eb;--brand2:#1d4ed8;--line:#1f2937}
-    *{box-sizing:border-box} body{margin:0;font-family:Arial,sans-serif;background:#f8fafc}
-    .wrap{max-width:800px;margin:0 auto;padding:28px}
-    #launcher{position:fixed;right:20px;bottom:20px;z-index:9999;border:none;border-radius:999px;padding:14px 18px;background:linear-gradient(135deg,var(--brand),var(--brand2));color:#fff;font-weight:700;cursor:pointer;box-shadow:0 10px 30px rgba(0,0,0,.2)}
-    #box{position:fixed;right:20px;bottom:84px;width:380px;max-width:calc(100vw - 20px);height:640px;max-height:calc(100vh - 100px);display:none;flex-direction:column;background:var(--panel);color:var(--text);border-radius:22px;overflow:hidden;box-shadow:0 20px 60px rgba(2,6,23,.35);z-index:9999}
-    #header{padding:16px;background:linear-gradient(180deg,#111827,#0b1220);border-bottom:1px solid rgba(255,255,255,.06)}
-    .headrow{display:flex;justify-content:space-between;align-items:center}
-    .title{font-weight:800}.sub{font-size:12px;color:var(--muted);margin-top:3px}
-    .icon{border:none;background:rgba(255,255,255,.06);color:#fff;border-radius:10px;width:34px;height:34px;cursor:pointer}
-    .chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
-    .chip{border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.04);color:#fff;border-radius:999px;padding:8px 12px;font-size:12px;cursor:pointer}
-    #messages{flex:1;overflow-y:auto;padding:14px;background:linear-gradient(180deg,#0b1220,#0f172a)}
-    .row{display:flex;margin-bottom:12px}.row.user{justify-content:flex-end}
-    .msg{max-width:84%;padding:12px 14px;border-radius:18px;line-height:1.5;font-size:14px;white-space:pre-wrap;word-break:break-word}
-    .bot{background:#1f2937;border-top-left-radius:6px}.user{background:linear-gradient(135deg,var(--brand),var(--brand2));color:#fff;border-top-right-radius:6px}
-    #footer{padding:12px;background:#0b1220;border-top:1px solid rgba(255,255,255,.06)}
-    .inputrow{display:flex;gap:10px}
-    #input{flex:1;min-height:48px;max-height:120px;resize:none;border:1px solid rgba(255,255,255,.08);background:#111827;color:#fff;border-radius:14px;padding:12px;outline:none}
-    #send{height:48px;min-width:52px;border:none;border-radius:14px;background:linear-gradient(135deg,var(--brand),var(--brand2));color:#fff;cursor:pointer;font-weight:800}
-    .typing span{display:inline-block;width:8px;height:8px;border-radius:50%;background:#94a3b8;margin-right:5px;animation:b 1.2s infinite ease-in-out}
-    .typing span:nth-child(2){animation-delay:.15s}.typing span:nth-child(3){animation-delay:.3s}
-    @keyframes b{0%,80%,100%{transform:translateY(0);opacity:.35}40%{transform:translateY(-6px);opacity:1}}
-    .lead{margin:10px 0 14px;border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.04);border-radius:18px;padding:14px}
-    .lead h3{margin:0 0 8px;font-size:15px}.lead p{margin:0 0 12px;color:var(--muted);font-size:13px}
-    .field{margin-bottom:10px}.field label{display:block;font-size:12px;color:#cbd5e1;margin-bottom:6px}
-    .field input,.field textarea,.field select{width:100%;border-radius:12px;border:1px solid rgba(255,255,255,.08);background:#0b1220;color:#fff;padding:12px;outline:none}
-    .field textarea{min-height:82px;resize:vertical}
-    .actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
-    .btn{border:none;border-radius:12px;padding:12px 14px;cursor:pointer;font-weight:700}
-    .primary{background:linear-gradient(135deg,var(--brand),var(--brand2));color:#fff}
-    .secondary{background:rgba(255,255,255,.06);color:#fff;border:1px solid rgba(255,255,255,.08)}
-    @media (max-width:520px){#box{right:10px;bottom:80px;width:calc(100vw - 20px);height:calc(100vh - 95px)}#launcher{right:10px;bottom:10px}}
+    :root {
+      --bg: #0b1220;
+      --panel: #111827;
+      --text: #e5e7eb;
+      --muted: #94a3b8;
+      --brand: #2563eb;
+      --brand2: #1d4ed8;
+      --line: #1f2937;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+      background: #f8fafc;
+    }
+
+    .wrap {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 28px;
+    }
+
+    #launcher {
+      position: fixed;
+      right: 20px;
+      bottom: 20px;
+      z-index: 9999;
+      border: none;
+      border-radius: 999px;
+      padding: 14px 18px;
+      background: linear-gradient(135deg, var(--brand), var(--brand2));
+      color: #fff;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    }
+
+    #box {
+      position: fixed;
+      right: 20px;
+      bottom: 84px;
+      width: 380px;
+      max-width: calc(100vw - 20px);
+      height: 640px;
+      max-height: calc(100vh - 100px);
+      display: none;
+      flex-direction: column;
+      background: var(--panel);
+      color: var(--text);
+      border-radius: 22px;
+      overflow: hidden;
+      box-shadow: 0 20px 60px rgba(2, 6, 23, 0.35);
+      z-index: 9999;
+    }
+
+    #header {
+      padding: 16px;
+      background: linear-gradient(180deg, #111827, #0b1220);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .headrow {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .title {
+      font-weight: 800;
+      font-size: 16px;
+    }
+
+    .sub {
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 3px;
+    }
+
+    .icon-wrap {
+      display: flex;
+      gap: 8px;
+    }
+
+    .icon {
+      border: none;
+      background: rgba(255, 255, 255, 0.06);
+      color: #fff;
+      border-radius: 10px;
+      width: 34px;
+      height: 34px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    .chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .chip {
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      background: rgba(255, 255, 255, 0.04);
+      color: #fff;
+      border-radius: 999px;
+      padding: 8px 12px;
+      font-size: 12px;
+      cursor: pointer;
+    }
+
+    #messages {
+      flex: 1;
+      overflow-y: auto;
+      padding: 14px;
+      background: linear-gradient(180deg, #0b1220, #0f172a);
+    }
+
+    .row {
+      display: flex;
+      margin-bottom: 12px;
+    }
+
+    .row.user {
+      justify-content: flex-end;
+    }
+
+    .msg {
+      max-width: 84%;
+      padding: 12px 14px;
+      border-radius: 18px;
+      line-height: 1.5;
+      font-size: 14px;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+
+    .bot {
+      background: #1f2937;
+      border-top-left-radius: 6px;
+    }
+
+    .user {
+      background: linear-gradient(135deg, var(--brand), var(--brand2));
+      color: #fff;
+      border-top-right-radius: 6px;
+    }
+
+    #footer {
+      padding: 12px;
+      background: #0b1220;
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .inputrow {
+      display: flex;
+      gap: 10px;
+      align-items: flex-end;
+    }
+
+    #input {
+      flex: 1;
+      min-height: 48px;
+      max-height: 120px;
+      resize: none;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      background: #111827;
+      color: #fff;
+      border-radius: 14px;
+      padding: 12px;
+      outline: none;
+      font-size: 14px;
+    }
+
+    #send {
+      height: 48px;
+      min-width: 52px;
+      border: none;
+      border-radius: 14px;
+      background: linear-gradient(135deg, var(--brand), var(--brand2));
+      color: #fff;
+      cursor: pointer;
+      font-weight: 800;
+      font-size: 18px;
+    }
+
+    .typing span {
+      display: inline-block;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #94a3b8;
+      margin-right: 5px;
+      animation: bounce 1.2s infinite ease-in-out;
+    }
+
+    .typing span:nth-child(2) {
+      animation-delay: 0.15s;
+    }
+
+    .typing span:nth-child(3) {
+      animation-delay: 0.3s;
+    }
+
+    @keyframes bounce {
+      0%, 80%, 100% {
+        transform: translateY(0);
+        opacity: 0.35;
+      }
+      40% {
+        transform: translateY(-6px);
+        opacity: 1;
+      }
+    }
+
+    .lead {
+      margin: 10px 0 14px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      background: rgba(255, 255, 255, 0.04);
+      border-radius: 18px;
+      padding: 14px;
+    }
+
+    .lead h3 {
+      margin: 0 0 8px;
+      font-size: 15px;
+    }
+
+    .lead p {
+      margin: 0 0 12px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .field {
+      margin-bottom: 10px;
+    }
+
+    .field label {
+      display: block;
+      font-size: 12px;
+      color: #cbd5e1;
+      margin-bottom: 6px;
+    }
+
+    .field input,
+    .field textarea,
+    .field select {
+      width: 100%;
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      background: #0b1220;
+      color: #fff;
+      padding: 12px;
+      outline: none;
+      font-size: 14px;
+    }
+
+    .field textarea {
+      min-height: 82px;
+      resize: vertical;
+    }
+
+    .actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 12px;
+    }
+
+    .btn {
+      border: none;
+      border-radius: 12px;
+      padding: 12px 14px;
+      cursor: pointer;
+      font-weight: 700;
+    }
+
+    .primary {
+      background: linear-gradient(135deg, var(--brand), var(--brand2));
+      color: #fff;
+    }
+
+    .secondary {
+      background: rgba(255, 255, 255, 0.06);
+      color: #fff;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    @media (max-width: 768px) {
+      #box {
+        right: 0;
+        bottom: 0;
+        width: 100vw;
+        height: 100dvh;
+        max-height: 100dvh;
+        max-width: 100vw;
+        border-radius: 0;
+      }
+
+      #header {
+        padding: 14px;
+      }
+
+      .chips {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 6px;
+      }
+
+      .chip {
+        font-size: 11px;
+        padding: 8px 10px;
+        text-align: center;
+      }
+
+      #messages {
+        padding: 12px;
+      }
+
+      .msg {
+        max-width: 90%;
+        font-size: 15px;
+      }
+
+      #footer {
+        padding: 10px;
+        padding-bottom: calc(10px + env(safe-area-inset-bottom));
+      }
+
+      .inputrow {
+        gap: 8px;
+      }
+
+      #input {
+        min-height: 46px;
+        font-size: 16px;
+      }
+
+      #send {
+        min-width: 54px;
+        height: 46px;
+      }
+
+      #launcher {
+        right: 12px;
+        bottom: 12px;
+      }
+
+      body.chat-open #launcher {
+        display: none;
+      }
+    }
   </style>
 </head>
 <body>
   <div class="wrap">
     <h1>BluGrid AI Assistant Pro Widget</h1>
-    <p>This upgraded version has memory, typing animation, quick prompts, booking button, and lead capture that posts directly to your n8n workflow.</p>
+    <p>
+      This upgraded version has memory, typing animation, quick prompts,
+      booking button, and lead capture that posts directly to your n8n workflow.
+    </p>
   </div>
 
   <button id="launcher">Chat with us</button>
@@ -54,11 +384,12 @@
           <div class="title">BluGrid AI Assistant</div>
           <div class="sub">Sales • Support • Qualification</div>
         </div>
-        <div>
+        <div class="icon-wrap">
           <button class="icon" id="reset">↺</button>
           <button class="icon" id="close">✕</button>
         </div>
       </div>
+
       <div class="chips">
         <button class="chip" data-prompt="What do you guys do?">What do you do?</button>
         <button class="chip" data-prompt="How can an AI assistant help my business?">AI assistant value</button>
@@ -80,6 +411,7 @@
   <script>
     const WEBHOOK_URL = "https://maxton-ethnolinguistic-derelictly.ngrok-free.dev/webhook/blugrid-ai-assistant";
     const BOOKING_URL = "https://calendly.com/posthumus-blugridsystems";
+
     const STORE = "blugrid_widget_messages";
     const CONV = "blugrid_widget_conversation_id";
     const LEAD_SENT = "blugrid_widget_lead_sent";
@@ -98,88 +430,201 @@
     let sending = false;
     let typingEl = null;
 
-    function convId(){
+    function convId() {
       let id = localStorage.getItem(CONV);
-      if(!id){ id = "conv_" + Date.now() + "_" + Math.floor(Math.random()*10000); localStorage.setItem(CONV,id); }
+      if (!id) {
+        id = "conv_" + Date.now() + "_" + Math.floor(Math.random() * 10000);
+        localStorage.setItem(CONV, id);
+      }
       return id;
     }
-    function stored(){ try{return JSON.parse(localStorage.getItem(STORE)||"[]")}catch{return []} }
-    function save(arr){ localStorage.setItem(STORE, JSON.stringify(arr)); }
-    function push(msg){ const arr = stored(); arr.push(msg); save(arr); }
-    function esc(s){ return s.replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;"); }
-    function grow(){ input.style.height="48px"; input.style.height=Math.min(input.scrollHeight,120)+"px"; }
-    function add(text, sender, persist=true){
-      const row = document.createElement("div"); row.className = "row " + sender;
-      const bubble = document.createElement("div"); bubble.className = "msg " + sender;
-      bubble.innerHTML = esc(text).replace(/\n/g,"<br>");
-      row.appendChild(bubble); messages.appendChild(row); messages.scrollTop = messages.scrollHeight;
-      if(persist) push({text, sender});
+
+    function stored() {
+      try {
+        return JSON.parse(localStorage.getItem(STORE) || "[]");
+      } catch {
+        return [];
+      }
     }
-    function render(){
+
+    function save(arr) {
+      localStorage.setItem(STORE, JSON.stringify(arr));
+    }
+
+    function push(msg) {
+      const arr = stored();
+      arr.push(msg);
+      save(arr);
+    }
+
+    function esc(s) {
+      return s
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;");
+    }
+
+    function grow() {
+      input.style.height = "48px";
+      input.style.height = Math.min(input.scrollHeight, 120) + "px";
+    }
+
+    function add(text, sender, persist = true) {
+      const row = document.createElement("div");
+      row.className = "row " + sender;
+
+      const bubble = document.createElement("div");
+      bubble.className = "msg " + sender;
+      bubble.innerHTML = esc(text).replace(/\n/g, "<br>");
+
+      row.appendChild(bubble);
+      messages.appendChild(row);
+      messages.scrollTop = messages.scrollHeight;
+
+      if (persist) {
+        push({ text, sender });
+      }
+    }
+
+    function render() {
       messages.innerHTML = "";
       const arr = stored();
-      if(!arr.length){ add("Hi — welcome to BluGrid. I can answer questions, explain our systems, and help you book a call or request a custom solution.", "bot", true); return; }
-      arr.forEach(m => add(m.text, m.sender, false));
-    }
-    function showTyping(){
-      hideTyping();
-      const row = document.createElement("div"); row.className = "row bot";
-      const bubble = document.createElement("div"); bubble.className = "msg bot";
-      bubble.innerHTML = '<div class="typing"><span></span><span></span><span></span></div>';
-      row.appendChild(bubble); messages.appendChild(row); messages.scrollTop = messages.scrollHeight; typingEl = row;
-    }
-    function hideTyping(){ if(typingEl){ typingEl.remove(); typingEl = null; } }
-    function toggle(force){ open = typeof force === "boolean" ? force : !open; box.style.display = open ? "flex" : "none"; }
 
-    async function sendChat(text){
-      if(!text || sending) return;
+      if (!arr.length) {
+        add(
+          "Hi — welcome to BluGrid. I can answer questions, explain our systems, and help you book a call or request a custom solution.",
+          "bot",
+          true
+        );
+        return;
+      }
+
+      arr.forEach((m) => add(m.text, m.sender, false));
+    }
+
+    function showTyping() {
+      hideTyping();
+
+      const row = document.createElement("div");
+      row.className = "row bot";
+
+      const bubble = document.createElement("div");
+      bubble.className = "msg bot";
+      bubble.innerHTML = '<div class="typing"><span></span><span></span><span></span></div>';
+
+      row.appendChild(bubble);
+      messages.appendChild(row);
+      messages.scrollTop = messages.scrollHeight;
+      typingEl = row;
+    }
+
+    function hideTyping() {
+      if (typingEl) {
+        typingEl.remove();
+        typingEl = null;
+      }
+    }
+
+    function toggle(force) {
+      open = typeof force === "boolean" ? force : !open;
+      box.style.display = open ? "flex" : "none";
+      document.body.classList.toggle("chat-open", open);
+    }
+
+    async function sendChat(text) {
+      if (!text || sending) return;
+
       sending = true;
       add(text, "user", true);
       showTyping();
-      try{
+
+      try {
         const res = await fetch(WEBHOOK_URL, {
-          method:"POST",
-          headers:{"Content-Type":"application/json"},
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
-            event_type:"chat",
-            message:text,
+            event_type: "chat",
+            message: text,
             conversation_id: convId(),
             page_url: window.location.href,
-            visitor:{user_agent:navigator.userAgent},
-            metadata:{business_name:"BluGrid", services:"custom business software, automation systems, AI assistants, dashboards, portals, lead generation systems"}
+            visitor: { user_agent: navigator.userAgent },
+            metadata: {
+              business_name: "BluGrid",
+              services:
+                "custom business software, automation systems, AI assistants, dashboards, portals, lead generation systems"
+            }
           })
         });
-        const data = await res.json();
+
+        const rawText = await res.text();
+        let data;
+
+        try {
+          data = JSON.parse(rawText);
+        } catch (e) {
+          hideTyping();
+          add("Server replied, but the response was not valid JSON.", "bot", true);
+          console.error("JSON parse error:", e, rawText);
+          return;
+        }
+
         hideTyping();
-        if(data.reply){
+
+        if (data.reply) {
           add(data.reply, "bot", true);
+
           const already = localStorage.getItem(LEAD_SENT) === "true";
-          if((data.handoff_suggested || /book|call|quote|pricing|details|contact|email|phone/i.test(data.reply)) && !already){
+          if (
+            (data.handoff_suggested || /book|call|quote|pricing|details|contact|email|phone/i.test(data.reply)) &&
+            !already
+          ) {
             setTimeout(showLeadForm, 500);
           }
         } else {
-          add("I couldn't generate a clean reply just now. Please try again.", "bot", true);
+          add("The server responded, but no reply field was found.", "bot", true);
+          console.log("Unexpected response shape:", data);
         }
-      } catch(e){
+      } catch (e) {
         hideTyping();
         add("Connection error. Please try again in a moment.", "bot", true);
+        console.error(e);
       } finally {
         sending = false;
       }
     }
 
-    function showLeadForm(){
-      if(document.getElementById("lead-card")) return;
+    function showLeadForm() {
+      if (document.getElementById("lead-card")) return;
+
       const card = document.createElement("div");
-      card.className = "lead"; card.id = "lead-card";
+      card.className = "lead";
+      card.id = "lead-card";
       card.innerHTML = `
         <h3>Let’s turn this into a real opportunity</h3>
         <p>Drop your details and BluGrid can follow up with a tailored solution.</p>
-        <div class="field"><label>Full name</label><input id="lead-name" placeholder="John Smith"></div>
-        <div class="field"><label>Email</label><input id="lead-email" type="email" placeholder="john@company.com"></div>
-        <div class="field"><label>Phone</label><input id="lead-phone" placeholder="+1 555 123 4567"></div>
-        <div class="field"><label>Company</label><input id="lead-company" placeholder="Smith HVAC"></div>
-        <div class="field"><label>Service needed</label>
+
+        <div class="field">
+          <label>Full name</label>
+          <input id="lead-name" placeholder="John Smith" />
+        </div>
+
+        <div class="field">
+          <label>Email</label>
+          <input id="lead-email" type="email" placeholder="john@company.com" />
+        </div>
+
+        <div class="field">
+          <label>Phone</label>
+          <input id="lead-phone" placeholder="+27 82 123 4567" />
+        </div>
+
+        <div class="field">
+          <label>Company</label>
+          <input id="lead-company" placeholder="Smith HVAC" />
+        </div>
+
+        <div class="field">
+          <label>Service needed</label>
           <select id="lead-service">
             <option value="AI assistant">AI assistant</option>
             <option value="Custom software">Custom software</option>
@@ -187,81 +632,144 @@
             <option value="Full system build">Full system build</option>
           </select>
         </div>
-        <div class="field"><label>Biggest problem</label><textarea id="lead-problem" placeholder="Missed leads, slow admin, poor follow-up, disconnected systems..."></textarea></div>
+
+        <div class="field">
+          <label>Biggest problem</label>
+          <textarea id="lead-problem" placeholder="Missed leads, slow admin, poor follow-up, disconnected systems..."></textarea>
+        </div>
+
         <div class="actions">
           <button class="btn primary" id="submit-lead">Send details</button>
           <button class="btn secondary" id="book-now">Book a call</button>
-        </div>`;
-      messages.appendChild(card); messages.scrollTop = messages.scrollHeight;
+        </div>
+      `;
+
+      messages.appendChild(card);
+      messages.scrollTop = messages.scrollHeight;
+
       document.getElementById("submit-lead").addEventListener("click", submitLead);
       document.getElementById("book-now").addEventListener("click", () => window.open(BOOKING_URL, "_blank"));
     }
 
-    async function submitLead(){
+    async function submitLead() {
       const full_name = document.getElementById("lead-name").value.trim();
       const email = document.getElementById("lead-email").value.trim();
       const phone = document.getElementById("lead-phone").value.trim();
       const company_name = document.getElementById("lead-company").value.trim();
       const service_interest = document.getElementById("lead-service").value;
       const biggest_problem = document.getElementById("lead-problem").value.trim();
-      if(!full_name || !email || !service_interest){ alert("Please fill in full name, email, and service needed."); return; }
+
+      if (!full_name || !email || !service_interest) {
+        alert("Please fill in full name, email, and service needed.");
+        return;
+      }
 
       const btn = document.getElementById("submit-lead");
       btn.textContent = "Sending...";
       btn.disabled = true;
 
-      try{
+      try {
         const res = await fetch(WEBHOOK_URL, {
-          method:"POST",
-          headers:{"Content-Type":"application/json"},
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
-            event_type:"lead_capture",
+            event_type: "lead_capture",
             conversation_id: convId(),
             page_url: window.location.href,
-            lead:{
-              full_name, email, phone, company_name,
-              website: window.location.origin,
+            lead: {
+              full_name,
+              email,
+              phone,
+              company_name,
+              website: "Demo Page",
               service_interest,
               monthly_lead_volume: "",
               biggest_problem
             }
           })
         });
-        const data = await res.json();
-        if(data.ok){
+
+        const rawText = await res.text();
+        let data;
+
+        try {
+          data = JSON.parse(rawText);
+        } catch (e) {
+          alert("Server returned an invalid response.");
+          console.error("Lead JSON parse error:", e, rawText);
+          btn.textContent = "Send details";
+          btn.disabled = false;
+          return;
+        }
+
+        if (data.ok) {
           localStorage.setItem(LEAD_SENT, "true");
-          document.getElementById("lead-card").innerHTML = `<h3>Lead captured successfully</h3><p>Perfect — BluGrid has your details. Someone should follow up shortly.</p><div class="actions"><button class="btn primary" onclick="window.open('${BOOKING_URL}','_blank')">Book a call now</button></div>`;
+
+          document.getElementById("lead-card").innerHTML = `
+            <h3>Lead captured successfully</h3>
+            <p>Perfect — BluGrid has your details. Someone should follow up shortly.</p>
+            <div class="actions">
+              <button class="btn primary" onclick="window.open('${BOOKING_URL}','_blank')">Book a call now</button>
+            </div>
+          `;
+
           add("Thanks — your details have been captured. BluGrid will follow up with you shortly.", "bot", true);
         } else {
-          alert((data.errors || []).join(", ") || "Lead capture failed.");
-          btn.textContent = "Send details"; btn.disabled = false;
+          alert((data.errors || []).join(", ") || data.message || "Lead capture failed.");
+          btn.textContent = "Send details";
+          btn.disabled = false;
         }
-      } catch(e){
+      } catch (e) {
         alert("Could not send your details right now.");
-        btn.textContent = "Send details"; btn.disabled = false;
+        console.error(e);
+        btn.textContent = "Send details";
+        btn.disabled = false;
       }
     }
 
     launcher.addEventListener("click", () => toggle());
     closeBtn.addEventListener("click", () => toggle(false));
+
     resetBtn.addEventListener("click", () => {
-      localStorage.removeItem(STORE); localStorage.removeItem(CONV); localStorage.removeItem(LEAD_SENT);
-      render(); add("Chat reset. Starting fresh.", "bot", true);
+      localStorage.removeItem(STORE);
+      localStorage.removeItem(CONV);
+      localStorage.removeItem(LEAD_SENT);
+      render();
+      add("Chat reset. Starting fresh.", "bot", true);
     });
-    chips.forEach(chip => chip.addEventListener("click", () => { toggle(true); sendChat(chip.dataset.prompt); }));
+
+    chips.forEach((chip) =>
+      chip.addEventListener("click", () => {
+        toggle(true);
+        sendChat(chip.dataset.prompt);
+      })
+    );
+
     bookchip.addEventListener("click", () => window.open(BOOKING_URL, "_blank"));
-    send.addEventListener("click", () => { const t = input.value.trim(); if(!t) return; input.value=""; grow(); sendChat(t); });
+
+    send.addEventListener("click", () => {
+      const t = input.value.trim();
+      if (!t) return;
+      input.value = "";
+      grow();
+      sendChat(t);
+    });
+
     input.addEventListener("input", grow);
+
     input.addEventListener("keydown", (e) => {
-      if(e.key === "Enter" && !e.shiftKey){
+      if (e.key === "Enter" && !e.shiftKey) {
         e.preventDefault();
         const t = input.value.trim();
-        if(!t) return;
-        input.value=""; grow(); sendChat(t);
+        if (!t) return;
+        input.value = "";
+        grow();
+        sendChat(t);
       }
     });
 
-    render(); grow();
+    render();
+    grow();
   </script>
 </body>
 </html>
