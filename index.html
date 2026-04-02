@@ -120,6 +120,7 @@
       padding: 8px 12px;
       font-size: 12px;
       cursor: pointer;
+      text-align: center;
     }
 
     #messages {
@@ -301,6 +302,10 @@
     }
 
     @media (max-width: 768px) {
+      .wrap {
+        padding: 0;
+      }
+
       #box {
         right: 0;
         bottom: 0;
@@ -324,7 +329,6 @@
       .chip {
         font-size: 11px;
         padding: 8px 10px;
-        text-align: center;
       }
 
       #messages {
@@ -370,7 +374,7 @@
   <div class="wrap">
     <h1>BluGrid AI Assistant Pro Widget</h1>
     <p>
-      This upgraded version has memory, typing animation, quick prompts,
+      This upgraded version has typing animation, quick prompts,
       booking button, and lead capture that posts directly to your n8n workflow.
     </p>
   </div>
@@ -409,6 +413,11 @@
   </div>
 
   <script>
+    // ALWAYS START FRESH ON PAGE LOAD
+    localStorage.removeItem("blugrid_widget_messages");
+    localStorage.removeItem("blugrid_widget_conversation_id");
+    localStorage.removeItem("blugrid_widget_lead_sent");
+
     const WEBHOOK_URL = "https://maxton-ethnolinguistic-derelictly.ngrok-free.dev/webhook/blugrid-ai-assistant";
     const BOOKING_URL = "https://calendly.com/posthumus-blugridsystems";
 
@@ -488,18 +497,11 @@
 
     function render() {
       messages.innerHTML = "";
-      const arr = stored();
-
-      if (!arr.length) {
-        add(
-          "Hi — welcome to BluGrid. I can answer questions, explain our systems, and help you book a call or request a custom solution.",
-          "bot",
-          true
-        );
-        return;
-      }
-
-      arr.forEach((m) => add(m.text, m.sender, false));
+      add(
+        "Hi — welcome to BluGrid. I can answer questions, explain our systems, and help you book a call or request a custom solution.",
+        "bot",
+        true
+      );
     }
 
     function showTyping() {
@@ -735,7 +737,6 @@
       localStorage.removeItem(CONV);
       localStorage.removeItem(LEAD_SENT);
       render();
-      add("Chat reset. Starting fresh.", "bot", true);
     });
 
     chips.forEach((chip) =>
